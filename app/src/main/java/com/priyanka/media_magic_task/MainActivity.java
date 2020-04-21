@@ -1,5 +1,6 @@
 package com.priyanka.media_magic_task;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public JSONArray jArray;
 
     public itemModel model;
+    public ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPreExecute() {
             super .onPreExecute();
+
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Loading Images, please wait...");
+            pDialog.show();
         }
 
         @Override
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPostExecute(String s) {
             super .onPostExecute(s);
+            pDialog.dismiss();
             CustomAdapter adapter = new CustomAdapter(MainActivity.this, arrayList);
             listView.setAdapter(adapter);
 
